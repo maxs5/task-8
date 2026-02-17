@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
 import InformationLayout from './InformationLayout.jsx';
+import { useSelector } from '../../store/reactReduxLite.js';
 
-const Information = ({ currentPlayer, isGameEnded, isDraw }) => {
+const Information = () => {
+  const { currentPlayer, isGameEnded, isDraw } = useSelector((state) => ({
+    currentPlayer: state.currentPlayer,
+    isGameEnded: state.isGameEnded,
+    isDraw: state.isDraw,
+  }));
+
   return (
     <InformationLayout currentPlayer={currentPlayer} isGameEnded={isGameEnded} isDraw={isDraw} />
   );
-};
-
-Information.propTypes = {
-  currentPlayer: PropTypes.oneOf(['X', '0']).isRequired,
-  isGameEnded: PropTypes.bool.isRequired,
-  isDraw: PropTypes.bool.isRequired,
 };
 
 export default Information;

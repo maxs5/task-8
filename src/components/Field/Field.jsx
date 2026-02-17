@@ -1,14 +1,25 @@
-import PropTypes from 'prop-types';
 import FieldLayout from './FieldLayout.jsx';
+import { useDispatch, useSelector } from '../../store/reactReduxLite.js';
 
-const Field = ({ field, onCellClick, isGameLocked }) => {
-  return <FieldLayout field={field} onCellClick={onCellClick} isGameLocked={isGameLocked} />;
-};
+const Field = () => {
+  const { field, isGameEnded, isDraw } = useSelector((state) => ({
+    field: state.field,
+    isGameEnded: state.isGameEnded,
+    isDraw: state.isDraw,
+  }));
+  const dispatch = useDispatch();
 
-Field.propTypes = {
-  field: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onCellClick: PropTypes.func.isRequired,
-  isGameLocked: PropTypes.bool.isRequired,
+  const handleCellClick = (index) => {
+    dispatch({ type: 'MAKE_MOVE', payload: index });
+  };
+
+  return (
+    <FieldLayout
+      field={field}
+      onCellClick={handleCellClick}
+      isGameLocked={isGameEnded || isDraw}
+    />
+  );
 };
 
 export default Field;
